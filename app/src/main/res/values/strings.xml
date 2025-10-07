@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Eventora</string>
+    <string name="search_placeholder">You haven’t searched for anything yet.</string>
+    <string name="event_search_image">Event search image</string>
+    <string name="event_title">Event Title</string>
+    <string name="something_went_wrong">Something went wrong!</string>
+    <string name="retry_button">Retry</string>
+    <string name="event_cover">Event cover</string>
+    <string name="dicoding_event_title">Dicoding Event</string>
+    <string name="upcoming_events">Upcoming Events</string>
+    <string name="finished_events">Finished Events</string>
+    <string name="desc_placeholder">Dicoding Developer Coaching kembali hadir! Kali ini membahas RTK dan Redux Fundamental</string>
+    <string name="summary_placeholder">Acara ini sepenuhnya GRATIS dan akan diselenggarakan hari Jumat</string>
+    <string name="home_menu">Home</string>
+    <string name="setting_menu">Setting</string>
+    <string name="search_menu">Search</string>
+    <string name="event_placeholder">Event 1</string>
+    <string name="event_description">Event description…</string>
+    <string name="search_events">Search events…</string>
+    <string name="upcoming_status">Upcoming</string>
+</resources>
