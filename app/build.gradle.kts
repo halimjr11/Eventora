@@ -5,6 +5,7 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
     id("kotlin-parcelize")
 }
 
@@ -25,7 +26,11 @@ android {
             localProperties.load(localPropertiesFile.inputStream())
         }
         val baseUrl: String = localProperties.getProperty("BASE_URL") ?: ""
+        val dbName: String = localProperties.getProperty("DB_NAME") ?: ""
+        val entityName: String = localProperties.getProperty("ENTITY_NAME") ?: ""
         buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
+        buildConfigField("String", "DB_NAME", "\"$dbName\"")
+        buildConfigField("String", "ENTITY_NAME", "\"$entityName\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -84,6 +89,9 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockk)
     testImplementation(libs.junit)
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
