@@ -1,8 +1,8 @@
-package com.halimjr11.eventora.view.features.home
+package com.halimjr11.eventora.view.features.finished
 
 import com.halimjr11.eventora.core.coroutines.CoroutineDispatcherProvider
+import com.halimjr11.eventora.data.repository.EventRepository
 import com.halimjr11.eventora.domain.model.EventDomain
-import com.halimjr11.eventora.domain.usecase.GetUpcomingUseCase
 import com.halimjr11.eventora.utils.Constants.UNKNOWN_ERROR
 import com.halimjr11.eventora.utils.DomainResult
 import com.halimjr11.eventora.utils.MainDispatcherRule
@@ -17,19 +17,16 @@ import org.junit.Rule
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class HomeViewModelTest {
+class FinishedViewModelTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
-    private lateinit var viewModel: HomeViewModel
-    private val getUpcomingUseCase: GetUpcomingUseCase = mockk(relaxed = true)
-    private val dummyPairEvents = Pair(
-        first = listOf(EventDomain(id = 1, name = "Sample Event 1")),
-        second = listOf(EventDomain(id = 2, name = "Sample Event 2"))
-    )
+    private lateinit var viewModel: FinishedViewModel
+    private val eventRepository: EventRepository = mockk(relaxed = true)
+    private val dummyEvents = listOf(EventDomain(id = 1, name = "Sample Event"))
 
     @Before
     fun setup() {
-        viewModel = HomeViewModel(getUpcomingUseCase, object : CoroutineDispatcherProvider {
+        viewModel = FinishedViewModel(eventRepository, object : CoroutineDispatcherProvider {
             override val io = mainDispatcherRule.testDispatcher
             override val default = mainDispatcherRule.testDispatcher
             override val unconfined = mainDispatcherRule.testDispatcher
@@ -38,24 +35,25 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `loadUpcomingEvents emits Success`() = runTest {
-        coEvery { getUpcomingUseCase() } returns DomainResult.Success(dummyPairEvents)
+    fun `loadPastEvents emits Success`() = runTest {
+        coEvery { eventRepository.getPastEvents() } returns DomainResult.Success(dummyEvents)
 
-        viewModel.loadUpcomingEvents()
+        viewModel.loadPastEvents()
         advanceUntilIdle()
 
-        val state = viewModel.upcomingEvents.value
-        assert(state is UiState.Success && state.data == dummyPairEvents)
+        val state = viewModel.pastEvents.value
+        assert(state is UiState.Success && state.data == dummyEvents)
     }
 
     @Test
-    fun `loadUpcomingEvents emits Error when failure`() = runTest {
-        coEvery { getUpcomingUseCase() } returns DomainResult.Error
+    fun `loadPastEvents emits Error when failure`() = runTest {
+        coEvery { eventRepository.getPastEvents() } returns DomainResult.Error
 
-        viewModel.loadUpcomingEvents()
+        viewModel.loadPastEvents()
         advanceUntilIdle()
 
-        val state = viewModel.upcomingEvents.value
+        val state = viewModel.pastEvents.value
         assert(state is UiState.Error && state.message == UNKNOWN_ERROR)
     }
+
 }

@@ -1,52 +1,54 @@
 package com.halimjr11.eventora.view.features.home
 
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.carousel.CarouselSnapHelper
 import com.halimjr11.eventora.databinding.FragmentHomeBinding
 import com.halimjr11.eventora.ui.base.BaseFragment
 import com.halimjr11.eventora.ui.helper.goToDetail
 import com.halimjr11.eventora.ui.helper.launchAndCollect
 import com.halimjr11.eventora.ui.helper.visibleIf
 import com.halimjr11.eventora.utils.UiState
-import com.halimjr11.eventora.view.adapters.FinishedAdapter
-import com.halimjr11.eventora.view.adapters.UpcomingAdapter
+import com.halimjr11.eventora.view.adapters.CarouselAdapter
+import com.halimjr11.eventora.view.adapters.MoreEventAdapter
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment :
     BaseFragment<FragmentHomeBinding, HomeViewModel>(FragmentHomeBinding::inflate) {
     override val viewModel: HomeViewModel by viewModel()
-    private val finishedAdapter: FinishedAdapter by lazy {
-        FinishedAdapter()
+    private val moreEventAdapter: MoreEventAdapter by lazy {
+        MoreEventAdapter()
     }
-    private val upcomingAdapter: UpcomingAdapter by lazy {
-        UpcomingAdapter()
+    private val carouselAdapter: CarouselAdapter by lazy {
+        CarouselAdapter()
     }
 
     override fun setupUI() = with(binding) {
+        nsvContent.isNestedScrollingEnabled = false
         progressCircular.run {
             isIndeterminate = true
             show()
         }
-        progressFinished.run {
-            isIndeterminate = true
-            show()
-        }
         rvUpcoming.apply {
-            adapter = upcomingAdapter
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        }
-        rvFinished.apply {
-            adapter = finishedAdapter
+            adapter = moreEventAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        }
+        recyclerCarousel.apply {
+            adapter = carouselAdapter
+            val snapHelper = CarouselSnapHelper()
+            snapHelper.attachToRecyclerView(this)
         }
         super.setupUI()
     }
 
     override fun setupListeners() = with(binding) {
-        upcomingAdapter.setOnClickCallback { event ->
+        moreEventAdapter.setOnClickCallback { event ->
             context?.goToDetail(event.id)
         }
-
-        finishedAdapter.setOnClickCallback { event ->
+        carouselAdapter.setOnClickCallback { event ->
             context?.goToDetail(event.id)
         }
         super.setupListeners()
@@ -56,12 +58,16 @@ class HomeFragment :
         launchAndCollect(upcomingEvents) { state ->
             binding.run {
                 loadingUpcoming.visibleIf(state is UiState.Loading)
-                rvUpcoming.visibleIf(state is UiState.Success)
+                nsvContent.visibleIf(state is UiState.Success)
                 evUpcoming.visibleIf(state is UiState.Error)
             }
             when (state) {
                 is UiState.Success -> {
-                    upcomingAdapter.submitList(state.data)
+                    println("JALANAN -->> DATA first = ${state.data.first.map { it.mediaCover }} ")
+                    val (carousel, moreEvents) = state.data
+                    carouselAdapter.submitList(carousel)
+                    moreEventAdapter.submitList(moreEvents)
+                    startAutoSlide()
                 }
 
                 is UiState.Error -> {
@@ -73,23 +79,19 @@ class HomeFragment :
                 else -> {}
             }
         }
-        launchAndCollect(pastEvents) { state ->
-            when (state) {
-                is UiState.Success -> finishedAdapter.submitList(state.data)
-                is UiState.Error -> {
-                    binding.evFinished.setMessageAndCallback(state.message) {
-                        loadPastEvents()
-                    }
-                }
+        super.observeData()
+    }
 
-                else -> {}
-            }
-            binding.run {
-                loadingFinished.visibleIf(state is UiState.Loading)
-                rvFinished.visibleIf(state is UiState.Success)
-                evFinished.visibleIf(state is UiState.Error)
+    private fun startAutoSlide() {
+        var currentPosition = 0
+        viewLifecycleOwner.lifecycleScope.launch {
+            while (isActive) {
+                delay(3000)
+                if (carouselAdapter.itemCount == 0) break
+
+                currentPosition = (currentPosition + 1) % carouselAdapter.itemCount
+                binding.recyclerCarousel.smoothScrollToPosition(currentPosition)
             }
         }
-        super.observeData()
     }
 }

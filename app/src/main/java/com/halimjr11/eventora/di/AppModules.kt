@@ -11,8 +11,10 @@ import com.halimjr11.eventora.data.mapper.impl.EventDataMapperImpl
 import com.halimjr11.eventora.data.repository.EventRepository
 import com.halimjr11.eventora.data.repository.impl.EventRepositoryImpl
 import com.halimjr11.eventora.data.service.EventService
+import com.halimjr11.eventora.domain.usecase.GetUpcomingUseCase
 import com.halimjr11.eventora.ui.helper.ThemeManager
 import com.halimjr11.eventora.view.features.detail.DetailViewModel
+import com.halimjr11.eventora.view.features.finished.FinishedViewModel
 import com.halimjr11.eventora.view.features.home.HomeViewModel
 import com.halimjr11.eventora.view.features.search.SearchViewModel
 import com.halimjr11.eventora.view.features.settings.SettingViewModel
@@ -33,6 +35,11 @@ object AppModules {
     }
     private val repositoryModule = module {
         single<EventRepository> { EventRepositoryImpl(get(), get(), get()) }
+    }
+    private val useCaseModule = module {
+        single {
+            GetUpcomingUseCase(get(), get())
+        }
     }
     private val mapperModule = module {
         single<EventDataMapper> { EventDataMapperImpl(get()) }
@@ -82,6 +89,7 @@ object AppModules {
 
     private val featureModule = module {
         viewModel { HomeViewModel(get(), get()) }
+        viewModel { FinishedViewModel(get(), get()) }
         viewModel { DetailViewModel(get(), get()) }
         viewModel { SearchViewModel(get(), get()) }
         viewModel { SettingViewModel(get()) }
@@ -98,6 +106,7 @@ object AppModules {
         mapperModule,
         serviceModule,
         repositoryModule,
+        useCaseModule,
         featureModule,
         settingsModule
     )

@@ -3,11 +3,14 @@ package com.halimjr11.eventora.ui.helper
 import android.content.Context
 import android.content.Intent
 import android.view.View
+import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import coil.load
+import coil.request.CachePolicy
 import com.halimjr11.eventora.domain.model.EventDomain
 import com.halimjr11.eventora.view.features.detail.DetailActivity
 import kotlinx.coroutines.flow.Flow
@@ -20,6 +23,22 @@ fun View.visibleIf(state: Boolean) {
 
 fun View.gone() {
     this.isVisible = false
+}
+
+fun ImageView.loadImage(url: String, action: () -> Unit = {}) {
+    load(url) {
+        crossfade(false)
+        memoryCachePolicy(CachePolicy.ENABLED)
+        diskCachePolicy(CachePolicy.ENABLED)
+        listener(
+            onSuccess = { _, _ ->
+                action()
+            },
+            onError = { _, _ ->
+                action()
+            }
+        )
+    }
 }
 
 fun Int?.orZero(): Int = this ?: 0

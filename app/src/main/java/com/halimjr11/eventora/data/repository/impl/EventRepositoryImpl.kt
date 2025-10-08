@@ -14,18 +14,24 @@ class EventRepositoryImpl(
     private val mapper: EventDataMapper,
     private val dispatcher: CoroutineDispatcherProvider
 ) : EventRepository {
+    override suspend fun getAllEvents(): DomainResult<List<EventDomain>> = safeCall {
+        service.getEvents().data?.map {
+            mapper.mapEventResponseToDomain(it)
+        }.orEmpty()
+    }
+
     override suspend fun getUpcomingEvents(): DomainResult<List<EventDomain>> = safeCall {
-        service.getActiveEvents().data?.map {
+        service.getEvents(active = 1).data?.map {
             mapper.mapEventResponseToDomain(it)
         }.orEmpty()
     }
 
     override suspend fun getPastEvents(): DomainResult<List<EventDomain>> = safeCall {
-        service.getFinishedEvents().data?.map { mapper.mapEventResponseToDomain(it) }.orEmpty()
+        service.getEvents(active = 0).data?.map { mapper.mapEventResponseToDomain(it) }.orEmpty()
     }
 
     override suspend fun searchEvents(keyword: String): DomainResult<List<EventDomain>> = safeCall {
-        service.searchEvents(keyword = keyword).data?.map {
+        service.getEvents(keyword = keyword).data?.map {
             mapper.mapEventResponseToDomain(it)
         }.orEmpty()
     }

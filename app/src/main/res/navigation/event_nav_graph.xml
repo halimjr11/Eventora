@@ -2,10 +2,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/menuHome">
+    app:startDestination="@id/menuUpcoming">
 
     <fragment
-        android:id="@+id/menuHome"
+        android:id="@+id/menuUpcoming"
         android:name="com.halimjr11.eventora.view.features.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home" />
@@ -19,5 +19,10 @@
         android:name="com.halimjr11.eventora.view.features.settings.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/menuFinished"
+        android:name="com.halimjr11.eventora.view.features.finished.FinishedFragment"
+        android:label="fragment_finished"
+        tools:layout="@layout/fragment_finished" />
 
 </navigation>
