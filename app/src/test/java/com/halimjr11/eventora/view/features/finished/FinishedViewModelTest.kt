@@ -55,5 +55,4 @@ class FinishedViewModelTest {
         val state = viewModel.pastEvents.value
         assert(state is UiState.Error && state.message == UNKNOWN_ERROR)
     }
-
 }

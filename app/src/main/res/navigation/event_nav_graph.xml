@@ -2,13 +2,13 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/menuUpcoming">
+    app:startDestination="@id/menuHome">
 
     <fragment
         android:id="@+id/menuUpcoming"
-        android:name="com.halimjr11.eventora.view.features.home.HomeFragment"
-        android:label="HomeFragment"
-        tools:layout="@layout/fragment_home" />
+        android:name="com.halimjr11.eventora.view.features.upcoming.UpcomingFragment"
+        android:label="UpcomingFragment"
+        tools:layout="@layout/fragment_upcoming" />
     <fragment
         android:id="@+id/menuSearch"
         android:name="com.halimjr11.eventora.view.features.search.SearchFragment"
@@ -24,5 +24,9 @@
         android:name="com.halimjr11.eventora.view.features.finished.FinishedFragment"
         android:label="fragment_finished"
         tools:layout="@layout/fragment_finished" />
+    <fragment
+        android:id="@+id/menuHome"
+        android:name="com.halimjr11.eventora.view.features.home.HomeFragment"
+        android:label="HomeFragment" />
 
 </navigation>

@@ -1,11 +1,11 @@
-package com.halimjr11.eventora.view.features.home
+package com.halimjr11.eventora.view.features.upcoming
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.halimjr11.eventora.core.coroutines.CoroutineDispatcherProvider
+import com.halimjr11.eventora.data.repository.EventRepository
 import com.halimjr11.eventora.domain.model.EventDomain
-import com.halimjr11.eventora.domain.usecase.GetUpcomingUseCase
-import com.halimjr11.eventora.utils.Constants.DATA_ERROR
+import com.halimjr11.eventora.utils.Constants.UNKNOWN_ERROR
 import com.halimjr11.eventora.utils.DomainResult
 import com.halimjr11.eventora.utils.UiState
 import com.halimjr11.eventora.utils.UiState.Error
@@ -14,22 +14,21 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class HomeViewModel(
-    private val getUpcomingUseCase: GetUpcomingUseCase,
+class UpcomingViewModel(
+    private val repository: EventRepository,
     private val dispatcher: CoroutineDispatcherProvider
 ) : ViewModel() {
-    private val _homeEvents =
-        MutableStateFlow<UiState<Pair<List<EventDomain>, List<EventDomain>>>>(UiState.Loading)
-    val homeEvents = _homeEvents.asStateFlow()
+    private val _upcomingEvents = MutableStateFlow<UiState<List<EventDomain>>>(UiState.Loading)
+    val upcomingEvents = _upcomingEvents.asStateFlow()
 
     init {
-        loadHomeEvents()
+        loadUpcomingEvents()
     }
 
-    fun loadHomeEvents() = viewModelScope.launch(dispatcher.io) {
-        _homeEvents.value = when (val result = getUpcomingUseCase()) {
+    fun loadUpcomingEvents() = viewModelScope.launch(dispatcher.io) {
+        _upcomingEvents.value = when (val result = repository.getUpcomingEvents()) {
             is DomainResult.Success -> Success(result.data)
-            else -> Error(DATA_ERROR)
+            else -> Error(UNKNOWN_ERROR)
         }
     }
 }

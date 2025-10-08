@@ -10,7 +10,7 @@ import com.halimjr11.eventora.ui.helper.launchAndCollect
 import com.halimjr11.eventora.ui.helper.visibleIf
 import com.halimjr11.eventora.utils.UiState
 import com.halimjr11.eventora.view.adapters.CarouselAdapter
-import com.halimjr11.eventora.view.adapters.MoreEventAdapter
+import com.halimjr11.eventora.view.adapters.VerticalEventAdapter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -19,8 +19,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class HomeFragment :
     BaseFragment<FragmentHomeBinding, HomeViewModel>(FragmentHomeBinding::inflate) {
     override val viewModel: HomeViewModel by viewModel()
-    private val moreEventAdapter: MoreEventAdapter by lazy {
-        MoreEventAdapter()
+    private val verticalEventAdapter: VerticalEventAdapter by lazy {
+        VerticalEventAdapter()
     }
     private val carouselAdapter: CarouselAdapter by lazy {
         CarouselAdapter()
@@ -33,7 +33,7 @@ class HomeFragment :
             show()
         }
         rvUpcoming.apply {
-            adapter = moreEventAdapter
+            adapter = verticalEventAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
         recyclerCarousel.apply {
@@ -45,7 +45,7 @@ class HomeFragment :
     }
 
     override fun setupListeners() = with(binding) {
-        moreEventAdapter.setOnClickCallback { event ->
+        verticalEventAdapter.setOnClickCallback { event ->
             context?.goToDetail(event.id)
         }
         carouselAdapter.setOnClickCallback { event ->
@@ -55,23 +55,23 @@ class HomeFragment :
     }
 
     override fun observeData() = with(viewModel) {
-        launchAndCollect(upcomingEvents) { state ->
+        launchAndCollect(homeEvents) { state ->
             binding.run {
-                loadingUpcoming.visibleIf(state is UiState.Loading)
+                loadingHome.visibleIf(state is UiState.Loading)
                 nsvContent.visibleIf(state is UiState.Success)
-                evUpcoming.visibleIf(state is UiState.Error)
+                evHome.visibleIf(state is UiState.Error)
             }
             when (state) {
                 is UiState.Success -> {
                     val (carousel, moreEvents) = state.data
                     carouselAdapter.submitList(carousel)
-                    moreEventAdapter.submitList(moreEvents)
+                    verticalEventAdapter.submitList(moreEvents)
                     startAutoSlide()
                 }
 
                 is UiState.Error -> {
-                    binding.evUpcoming.setMessageAndCallback(state.message) {
-                        loadUpcomingEvents()
+                    binding.evHome.setMessageAndCallback(state.message) {
+                        loadHomeEvents()
                     }
                 }
 

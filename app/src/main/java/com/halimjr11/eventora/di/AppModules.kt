@@ -18,6 +18,7 @@ import com.halimjr11.eventora.view.features.finished.FinishedViewModel
 import com.halimjr11.eventora.view.features.home.HomeViewModel
 import com.halimjr11.eventora.view.features.search.SearchViewModel
 import com.halimjr11.eventora.view.features.settings.SettingViewModel
+import com.halimjr11.eventora.view.features.upcoming.UpcomingViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -89,6 +90,7 @@ object AppModules {
 
     private val featureModule = module {
         viewModel { HomeViewModel(get(), get()) }
+        viewModel { UpcomingViewModel(get(), get()) }
         viewModel { FinishedViewModel(get(), get()) }
         viewModel { DetailViewModel(get(), get()) }
         viewModel { SearchViewModel(get(), get()) }
