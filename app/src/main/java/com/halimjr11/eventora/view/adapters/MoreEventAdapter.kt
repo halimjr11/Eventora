@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import com.halimjr11.eventora.databinding.ItemUpcomingEventBinding
+import com.halimjr11.eventora.databinding.ItemVerticalEventBinding
 import com.halimjr11.eventora.domain.model.EventDomain
+import com.halimjr11.eventora.ui.helper.loadImage
 
-class UpcomingAdapter : ListAdapter<EventDomain, UpcomingAdapter.UpcomingViewHolder>(
+class MoreEventAdapter : ListAdapter<EventDomain, MoreEventAdapter.MoreEventViewHolder>(
     UpcomingDiffCallback
 ) {
     private var onCardClick: ((EventDomain) -> Unit)? = null
@@ -18,11 +18,12 @@ class UpcomingAdapter : ListAdapter<EventDomain, UpcomingAdapter.UpcomingViewHol
         onCardClick = action
     }
 
-    inner class UpcomingViewHolder(private val binding: ItemUpcomingEventBinding) :
+    inner class MoreEventViewHolder(private val binding: ItemVerticalEventBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: EventDomain) = binding.run {
-            tvEventName.text = data.name
-            imgEvent.load(data.imageLogo)
+            tvEventTitle.text = data.name
+            tvEventDesc.text = data.summary
+            imgThumb.loadImage(data.imageLogo)
             binding.root.setOnClickListener {
                 onCardClick?.invoke(data)
             }
@@ -32,13 +33,13 @@ class UpcomingAdapter : ListAdapter<EventDomain, UpcomingAdapter.UpcomingViewHol
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): UpcomingViewHolder = UpcomingViewHolder(
-        ItemUpcomingEventBinding.inflate(
+    ): MoreEventViewHolder = MoreEventViewHolder(
+        ItemVerticalEventBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
     )
 
-    override fun onBindViewHolder(holder: UpcomingViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MoreEventViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 

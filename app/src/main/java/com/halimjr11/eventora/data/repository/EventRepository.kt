@@ -4,6 +4,7 @@ import com.halimjr11.eventora.domain.model.EventDomain
 import com.halimjr11.eventora.utils.DomainResult
 
 interface EventRepository {
+    suspend fun getAllEvents(): DomainResult<List<EventDomain>>
     suspend fun getUpcomingEvents(): DomainResult<List<EventDomain>>
     suspend fun getPastEvents(): DomainResult<List<EventDomain>>
     suspend fun searchEvents(keyword: String): DomainResult<List<EventDomain>>

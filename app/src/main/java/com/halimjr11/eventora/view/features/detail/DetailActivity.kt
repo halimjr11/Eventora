@@ -1,8 +1,10 @@
 package com.halimjr11.eventora.view.features.detail
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.core.text.HtmlCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -76,23 +78,26 @@ class DetailActivity : AppCompatActivity() {
             val check = when {
                 data.quota == 0 -> MaterialColors.getColor(
                     this,
-                    com.google.android.material.R.attr.colorOnError
+                    com.google.android.material.R.attr.colorTertiary
                 )
 
                 data.quota <= 5 -> MaterialColors.getColor(
                     this,
-                    com.google.android.material.R.attr.colorOnSecondary
+                    com.google.android.material.R.attr.colorSecondary
                 )
 
                 else -> MaterialColors.getColor(
                     this,
-                    com.google.android.material.R.attr.colorOnPrimary
+                    com.google.android.material.R.attr.colorPrimaryFixed
                 )
 
             }
             text = data.getQuotaText()
             setTextColor(check)
-
+        }
+        btnRegister.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, data.link.toUri())
+            startActivity(intent)
         }
     }
 

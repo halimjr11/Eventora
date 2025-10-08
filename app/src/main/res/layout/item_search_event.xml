@@ -72,13 +72,13 @@
             android:backgroundTint="?attr/colorPrimary"
             android:paddingHorizontal="8dp"
             android:paddingVertical="2dp"
-            android:text="@string/upcoming_status"
             android:textAppearance="?attr/textAppearanceLabelSmall"
             android:textColor="?attr/colorOnPrimary"
             app:layout_constraintBottom_toBottomOf="@id/tvEventTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tvEventTitle"
-            tools:ignore="TextContrastCheck" />
+            tools:ignore="TextContrastCheck"
+            tools:text="@string/upcoming_status" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.halimjr11.eventora.databinding.ItemSearchEventBinding
 import com.halimjr11.eventora.domain.model.EventDomain
+import com.halimjr11.eventora.ui.helper.loadImage
 
 class SearchAdapter : ListAdapter<EventDomain, SearchAdapter.SearchViewHolder>(
     UpcomingDiffCallback
@@ -23,7 +23,8 @@ class SearchAdapter : ListAdapter<EventDomain, SearchAdapter.SearchViewHolder>(
         fun bind(data: EventDomain) = binding.run {
             tvEventTitle.text = data.name
             tvEventDesc.text = data.summary
-            imgEvent.load(data.imageLogo)
+            tvEventStatus.text = data.category
+            imgEvent.loadImage(data.imageLogo)
             binding.root.setOnClickListener {
                 onCardClick?.invoke(data)
             }
