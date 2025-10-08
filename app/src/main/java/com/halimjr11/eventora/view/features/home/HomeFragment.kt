@@ -63,7 +63,6 @@ class HomeFragment :
             }
             when (state) {
                 is UiState.Success -> {
-                    println("JALANAN -->> DATA first = ${state.data.first.map { it.mediaCover }} ")
                     val (carousel, moreEvents) = state.data
                     carouselAdapter.submitList(carousel)
                     moreEventAdapter.submitList(moreEvents)

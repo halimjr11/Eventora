@@ -88,7 +88,7 @@ class DetailActivity : AppCompatActivity() {
 
                 else -> MaterialColors.getColor(
                     this,
-                    com.google.android.material.R.attr.colorPrimaryFixed
+                    com.google.android.material.R.attr.colorPrimaryVariant
                 )
 
             }
