@@ -10,7 +10,7 @@
     <string name="finished_events">Finished Events</string>
     <string name="desc_placeholder">Dicoding Developer Coaching kembali hadir! Kali ini membahas RTK dan Redux Fundamental</string>
     <string name="summary_placeholder">Acara ini sepenuhnya GRATIS dan akan diselenggarakan hari Jumat</string>
-    <string name="upcoming_menu">Home</string>
+    <string name="upcoming_menu">Upcoming</string>
     <string name="setting_menu">Setting</string>
     <string name="search_menu">Search</string>
     <string name="event_description">Event description…</string>
