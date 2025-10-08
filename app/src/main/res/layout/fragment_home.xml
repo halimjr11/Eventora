@@ -51,7 +51,7 @@
                 tools:listitem="@layout/item_carousel_event" />
 
             <TextView
-                android:id="@+id/tvUpcoming"
+                android:id="@+id/tvHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -68,7 +68,7 @@
                 android:overScrollMode="never"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvUpcoming"
+                app:layout_constraintTop_toBottomOf="@id/tvHome"
                 tools:listitem="@layout/item_vertical_event" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -76,7 +76,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <FrameLayout
-        android:id="@+id/loadingUpcoming"
+        android:id="@+id/loadingHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -96,7 +96,7 @@
     </FrameLayout>
 
     <com.halimjr11.eventora.ui.components.ErrorView
-        android:id="@+id/evUpcoming"
+        android:id="@+id/evHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"

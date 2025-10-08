@@ -9,7 +9,7 @@ import com.halimjr11.eventora.databinding.ItemVerticalEventBinding
 import com.halimjr11.eventora.domain.model.EventDomain
 import com.halimjr11.eventora.ui.helper.loadImage
 
-class FinishedAdapter : ListAdapter<EventDomain, FinishedAdapter.FinishedViewHolder>(
+class VerticalEventAdapter : ListAdapter<EventDomain, VerticalEventAdapter.FinishedViewHolder>(
     UpcomingDiffCallback
 ) {
     private var onCardClick: ((EventDomain) -> Unit)? = null

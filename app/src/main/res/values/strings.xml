@@ -8,8 +8,10 @@
     <string name="event_cover">Event cover</string>
     <string name="dicoding_event_title">Dicoding Event</string>
     <string name="finished_events">Finished Events</string>
+    <string name="upcoming_events">Upcoming Events</string>
     <string name="desc_placeholder">Dicoding Developer Coaching kembali hadir! Kali ini membahas RTK dan Redux Fundamental</string>
     <string name="summary_placeholder">Acara ini sepenuhnya GRATIS dan akan diselenggarakan hari Jumat</string>
+    <string name="home_menu">Home</string>
     <string name="upcoming_menu">Upcoming</string>
     <string name="setting_menu">Setting</string>
     <string name="search_menu">Search</string>
