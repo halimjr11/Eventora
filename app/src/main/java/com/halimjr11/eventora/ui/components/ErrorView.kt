@@ -24,7 +24,7 @@ class ErrorView @JvmOverloads constructor(
         }
     }
 
-    fun setMessageAndCallback(message: String, onClick: () -> Unit) {
+    fun setMessageAndCallback(message: String, onClick: () -> Unit = {}) {
         binding.tvErrorMessage.text = message
         binding.lottieError.playAnimation()
         onRetry = onClick

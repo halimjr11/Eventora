@@ -9,6 +9,7 @@ import com.halimjr11.eventora.ui.helper.launchAndCollect
 import com.halimjr11.eventora.ui.helper.visibleIf
 import com.halimjr11.eventora.utils.UiState
 import com.halimjr11.eventora.view.adapters.SearchAdapter
+import com.halimjr11.eventora.view.features.search.viewmodel.SearchViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment :

@@ -8,6 +8,7 @@ import com.halimjr11.eventora.ui.helper.launchAndCollect
 import com.halimjr11.eventora.ui.helper.visibleIf
 import com.halimjr11.eventora.utils.UiState
 import com.halimjr11.eventora.view.adapters.VerticalEventAdapter
+import com.halimjr11.eventora.view.features.finished.viewmodel.FinishedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FinishedFragment :

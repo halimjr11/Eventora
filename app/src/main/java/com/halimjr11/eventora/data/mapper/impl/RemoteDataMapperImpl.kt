@@ -1,7 +1,7 @@
 package com.halimjr11.eventora.data.mapper.impl
 
 import com.halimjr11.eventora.core.coroutines.CoroutineDispatcherProvider
-import com.halimjr11.eventora.data.mapper.EventDataMapper
+import com.halimjr11.eventora.data.mapper.RemoteDataMapper
 import com.halimjr11.eventora.data.model.EventResponse
 import com.halimjr11.eventora.domain.model.EventDomain
 import com.halimjr11.eventora.ui.helper.orZero
@@ -11,8 +11,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-class EventDataMapperImpl(private val dispatcher: CoroutineDispatcherProvider) : EventDataMapper {
-    // Thread-safe and reusable
+class RemoteDataMapperImpl(private val dispatcher: CoroutineDispatcherProvider) : RemoteDataMapper {
     private val inputFormatter =
         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
     private val outputFormatter =
@@ -23,7 +22,8 @@ class EventDataMapperImpl(private val dispatcher: CoroutineDispatcherProvider) :
             val dateTime = LocalDateTime.parse(input, inputFormatter)
             dateTime.format(outputFormatter)
         } catch (e: Exception) {
-            input // fallback to raw string if parsing fails
+            e.printStackTrace()
+            input
         }
     }
 

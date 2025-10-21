@@ -10,7 +10,8 @@ interface EventService {
     @GET("events")
     suspend fun getEvents(
         @Query("active") active: Int = -1,
-        @Query("q") keyword: String? = null
+        @Query("q") keyword: String? = null,
+        @Query("limit") limit: Int? = null
     ): BaseResponse<List<EventResponse>>
 
     @GET("events/{id}")

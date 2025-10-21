@@ -3,10 +3,11 @@ package com.halimjr11.eventora.view.features.home
 import com.halimjr11.eventora.core.coroutines.CoroutineDispatcherProvider
 import com.halimjr11.eventora.domain.model.EventDomain
 import com.halimjr11.eventora.domain.usecase.GetUpcomingUseCase
-import com.halimjr11.eventora.utils.Constants.UNKNOWN_ERROR
+import com.halimjr11.eventora.utils.Constants.DATA_ERROR
 import com.halimjr11.eventora.utils.DomainResult
 import com.halimjr11.eventora.utils.MainDispatcherRule
 import com.halimjr11.eventora.utils.UiState
+import com.halimjr11.eventora.view.features.home.viewmodel.HomeViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -56,6 +57,6 @@ class HomeViewModelTest {
         advanceUntilIdle()
 
         val state = viewModel.homeEvents.value
-        assert(state is UiState.Error && state.message == UNKNOWN_ERROR)
+        assert(state is UiState.Error && state.message == DATA_ERROR)
     }
 }

@@ -1,23 +1,28 @@
-package com.halimjr11.eventora.data.repository.impl
+package com.halimjr11.eventora.data.repository
 
 import com.halimjr11.eventora.core.coroutines.CoroutineDispatcherProvider
-import com.halimjr11.eventora.data.mapper.EventDataMapper
+import com.halimjr11.eventora.data.mapper.RemoteDataMapper
 import com.halimjr11.eventora.data.model.EventResponse
-import com.halimjr11.eventora.data.repository.EventRepository
 import com.halimjr11.eventora.data.service.EventService
 import com.halimjr11.eventora.domain.model.EventDomain
+import com.halimjr11.eventora.domain.repository.EventRemoteRepository
 import com.halimjr11.eventora.utils.DomainResult
 import kotlinx.coroutines.withContext
 
-class EventRepositoryImpl(
+class EventRemoteRemoteRepositoryImpl(
     private val service: EventService,
-    private val mapper: EventDataMapper,
+    private val mapper: RemoteDataMapper,
     private val dispatcher: CoroutineDispatcherProvider
-) : EventRepository {
+) : EventRemoteRepository {
     override suspend fun getAllEvents(): DomainResult<List<EventDomain>> = safeCall {
         service.getEvents().data?.map {
             mapper.mapEventResponseToDomain(it)
         }.orEmpty()
+    }
+
+    override suspend fun getNearestEvent(): EventDomain? {
+        val events = service.getEvents(limit = 1).data?.first()
+        return events?.let { event -> mapper.mapEventResponseToDomain(event) }
     }
 
     override suspend fun getUpcomingEvents(): DomainResult<List<EventDomain>> = safeCall {
@@ -47,6 +52,7 @@ class EventRepositoryImpl(
         try {
             DomainResult.Success(block())
         } catch (e: Exception) {
+            e.printStackTrace()
             DomainResult.Error
         }
     }

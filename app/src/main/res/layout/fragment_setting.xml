@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="Dark Mode"
+        android:text="@string/theme_setting_title"
         android:textAppearance="?attr/textAppearanceBodyLarge"
         android:textColor="?attr/colorOnBackground"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,10 +22,11 @@
 
     <!-- Dark Mode Description -->
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvDarkModeDesc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Enable dark mode"
+        android:text="@string/theme_settting_desc"
         android:textAppearance="?attr/textAppearanceBodyMedium"
         android:textColor="?attr/colorOnSurfaceVariant"
         app:layout_constraintEnd_toStartOf="@id/switchDarkMode"
@@ -41,5 +42,41 @@
         android:checked="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tvDarkModeTitle" />
+
+
+    <!-- Notification Label -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvNotificationTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/notifications_title"
+        android:textAppearance="?attr/textAppearanceBodyLarge"
+        android:textColor="?attr/colorOnBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDarkModeDesc"
+        tools:ignore="HardcodedText" />
+
+    <!-- Notification Description -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvNotificationDesc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/notifications_desc"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        app:layout_constraintEnd_toStartOf="@id/switchNotification"
+        app:layout_constraintStart_toStartOf="@id/tvNotificationTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvNotificationTitle"
+        tools:ignore="HardcodedText" />
+
+    <!-- Notification Switch -->
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switchNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvNotificationTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

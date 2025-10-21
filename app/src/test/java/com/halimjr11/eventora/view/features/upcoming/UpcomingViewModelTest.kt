@@ -1,12 +1,13 @@
 package com.halimjr11.eventora.view.features.upcoming
 
 import com.halimjr11.eventora.core.coroutines.CoroutineDispatcherProvider
-import com.halimjr11.eventora.data.repository.EventRepository
+import com.halimjr11.eventora.domain.repository.EventRemoteRepository
 import com.halimjr11.eventora.domain.model.EventDomain
 import com.halimjr11.eventora.utils.Constants.UNKNOWN_ERROR
 import com.halimjr11.eventora.utils.DomainResult
 import com.halimjr11.eventora.utils.MainDispatcherRule
 import com.halimjr11.eventora.utils.UiState
+import com.halimjr11.eventora.view.features.upcoming.viewmodel.UpcomingViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -21,12 +22,12 @@ class UpcomingViewModelTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
     private lateinit var viewModel: UpcomingViewModel
-    private val eventRepository: EventRepository = mockk(relaxed = true)
+    private val eventRemoteRepository: EventRemoteRepository = mockk(relaxed = true)
     private val dummyEvents = listOf(EventDomain(id = 1, name = "Sample Event"))
 
     @Before
     fun setup() {
-        viewModel = UpcomingViewModel(eventRepository, object : CoroutineDispatcherProvider {
+        viewModel = UpcomingViewModel(eventRemoteRepository, object : CoroutineDispatcherProvider {
             override val io = mainDispatcherRule.testDispatcher
             override val default = mainDispatcherRule.testDispatcher
             override val unconfined = mainDispatcherRule.testDispatcher
@@ -36,7 +37,7 @@ class UpcomingViewModelTest {
 
     @Test
     fun `loadUpcomingEvents emits Success`() = runTest {
-        coEvery { eventRepository.getUpcomingEvents() } returns DomainResult.Success(dummyEvents)
+        coEvery { eventRemoteRepository.getUpcomingEvents() } returns DomainResult.Success(dummyEvents)
 
         viewModel.loadUpcomingEvents()
         advanceUntilIdle()
@@ -47,7 +48,7 @@ class UpcomingViewModelTest {
 
     @Test
     fun `loadUpcomingEvents emits Error when failure`() = runTest {
-        coEvery { eventRepository.getUpcomingEvents() } returns DomainResult.Error
+        coEvery { eventRemoteRepository.getUpcomingEvents() } returns DomainResult.Error
 
         viewModel.loadUpcomingEvents()
         advanceUntilIdle()

@@ -2,9 +2,9 @@ package com.halimjr11.eventora.data.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.halimjr11.eventora.BuildConfig
+import com.halimjr11.eventora.utils.Constants
 
-@Entity(tableName = BuildConfig.ENTITY_NAME)
+@Entity(tableName = Constants.ENTITY_NAME)
 data class EventEntity(
     @PrimaryKey()
     val id: Int = 0,

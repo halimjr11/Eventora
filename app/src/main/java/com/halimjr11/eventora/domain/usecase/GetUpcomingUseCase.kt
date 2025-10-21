@@ -1,14 +1,14 @@
 package com.halimjr11.eventora.domain.usecase
 
 import com.halimjr11.eventora.core.coroutines.CoroutineDispatcherProvider
-import com.halimjr11.eventora.data.repository.EventRepository
+import com.halimjr11.eventora.domain.repository.EventRemoteRepository
 import com.halimjr11.eventora.domain.model.EventDomain
 import com.halimjr11.eventora.utils.Constants.EVENT_LIMIT
 import com.halimjr11.eventora.utils.DomainResult
 import kotlinx.coroutines.withContext
 
 class GetUpcomingUseCase(
-    private val repository: EventRepository,
+    private val repository: EventRemoteRepository,
     private val dispatcher: CoroutineDispatcherProvider
 ) {
     suspend operator fun invoke(): DomainResult<Pair<List<EventDomain>, List<EventDomain>>> =

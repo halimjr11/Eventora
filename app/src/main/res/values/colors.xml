@@ -14,4 +14,5 @@
     <color name="md_theme_dark_surface">#1E1E1E</color>
     <color name="md_theme_dark_onSurface">#E0E0E0</color>
     <color name="md_theme_dark_onBackground">#E0E0E0</color>
+    <color name="colorError">#E80000</color>
 </resources>

@@ -8,13 +8,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.halimjr11.eventora.databinding.ActivitySplashBinding
-import com.halimjr11.eventora.view.MainActivity
+import com.halimjr11.eventora.view.features.main.MainActivity
+import com.halimjr11.eventora.view.features.splash.viewmodel.SplashViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
+    private val viewModel: SplashViewModel by viewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.checkAndApplyTheme()
         binding = ActivitySplashBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)

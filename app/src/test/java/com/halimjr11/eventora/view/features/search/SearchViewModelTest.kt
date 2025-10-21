@@ -1,12 +1,13 @@
 package com.halimjr11.eventora.view.features.search
 
 import com.halimjr11.eventora.core.coroutines.CoroutineDispatcherProvider
-import com.halimjr11.eventora.data.repository.EventRepository
+import com.halimjr11.eventora.domain.repository.EventRemoteRepository
 import com.halimjr11.eventora.domain.model.EventDomain
 import com.halimjr11.eventora.utils.Constants.UNKNOWN_ERROR
 import com.halimjr11.eventora.utils.DomainResult
 import com.halimjr11.eventora.utils.MainDispatcherRule
 import com.halimjr11.eventora.utils.UiState
+import com.halimjr11.eventora.view.features.search.viewmodel.SearchViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -22,12 +23,12 @@ class SearchViewModelTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
     private lateinit var viewModel: SearchViewModel
-    private val eventRepository: EventRepository = mockk(relaxed = true)
+    private val eventRemoteRepository: EventRemoteRepository = mockk(relaxed = true)
     private val dummyEvents = listOf(EventDomain(id = 1, name = "Sample Event"))
 
     @Before
     fun setup() {
-        viewModel = SearchViewModel(eventRepository, object : CoroutineDispatcherProvider {
+        viewModel = SearchViewModel(eventRemoteRepository, object : CoroutineDispatcherProvider {
             override val io = mainDispatcherRule.testDispatcher
             override val default = mainDispatcherRule.testDispatcher
             override val unconfined = mainDispatcherRule.testDispatcher
@@ -37,7 +38,7 @@ class SearchViewModelTest {
 
     @Test
     fun `loadSearchEvents emits Success`() = runTest {
-        coEvery { eventRepository.searchEvents(any()) } returns DomainResult.Success(dummyEvents)
+        coEvery { eventRemoteRepository.searchEvents(any()) } returns DomainResult.Success(dummyEvents)
 
         viewModel.loadSearchEvents()
         advanceUntilIdle()
@@ -48,7 +49,7 @@ class SearchViewModelTest {
 
     @Test
     fun `loadSearchEvents emits Error when failure`() = runTest {
-        coEvery { eventRepository.searchEvents(any()) } returns DomainResult.Error
+        coEvery { eventRemoteRepository.searchEvents(any()) } returns DomainResult.Error
 
         viewModel.loadSearchEvents()
         advanceUntilIdle()

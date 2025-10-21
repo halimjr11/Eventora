@@ -1,5 +1,6 @@
 package com.halimjr11.eventora.view.features.home
 
+import android.content.Intent
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.carousel.CarouselSnapHelper
@@ -11,6 +12,8 @@ import com.halimjr11.eventora.ui.helper.visibleIf
 import com.halimjr11.eventora.utils.UiState
 import com.halimjr11.eventora.view.adapters.CarouselAdapter
 import com.halimjr11.eventora.view.adapters.VerticalEventAdapter
+import com.halimjr11.eventora.view.features.favorite.FavoriteActivity
+import com.halimjr11.eventora.view.features.home.viewmodel.HomeViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -50,6 +53,10 @@ class HomeFragment :
         }
         carouselAdapter.setOnClickCallback { event ->
             context?.goToDetail(event.id)
+        }
+        fabFavorite.setOnClickListener {
+            val intent = Intent(context, FavoriteActivity::class.java)
+            startActivity(intent)
         }
         super.setupListeners()
     }

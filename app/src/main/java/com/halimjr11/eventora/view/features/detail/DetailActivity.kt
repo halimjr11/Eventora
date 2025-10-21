@@ -1,6 +1,7 @@
 package com.halimjr11.eventora.view.features.detail
 
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ import com.halimjr11.eventora.ui.helper.launchAndCollect
 import com.halimjr11.eventora.ui.helper.visibleIf
 import com.halimjr11.eventora.utils.UiState
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.google.android.material.R as MaterialRes
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
@@ -58,6 +60,17 @@ class DetailActivity : AppCompatActivity() {
                 evDetailEvent.visibleIf(state is UiState.Error)
             }
         }
+
+        launchAndCollect(isFavorite) {
+            val color =
+                if (it) MaterialRes.attr.colorErrorContainer else MaterialRes.attr.colorOnSurface
+            binding.fabFavorite.apply {
+                setColorFilter(
+                    MaterialColors.getColor(this@apply, color),
+                    PorterDuff.Mode.SRC_IN
+                )
+            }
+        }
     }
 
     private fun setupDataDetail(data: EventDomain) = binding.run {
@@ -78,22 +91,25 @@ class DetailActivity : AppCompatActivity() {
             val check = when {
                 data.quota == 0 -> MaterialColors.getColor(
                     this,
-                    com.google.android.material.R.attr.colorTertiary
+                    MaterialRes.attr.colorTertiary
                 )
 
                 data.quota <= 5 -> MaterialColors.getColor(
                     this,
-                    com.google.android.material.R.attr.colorSecondary
+                    MaterialRes.attr.colorSecondary
                 )
 
                 else -> MaterialColors.getColor(
                     this,
-                    com.google.android.material.R.attr.colorPrimaryVariant
+                    MaterialRes.attr.colorPrimaryVariant
                 )
 
             }
             text = data.getQuotaText()
             setTextColor(check)
+        }
+        fabFavorite.setOnClickListener {
+            viewModel.toggleFavorite(data)
         }
         btnRegister.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, data.link.toUri())

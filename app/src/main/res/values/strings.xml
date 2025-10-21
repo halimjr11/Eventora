@@ -22,4 +22,13 @@
     <string name="finished_menu">Finished</string>
     <string name="other_event_title">See more events</string>
     <string name="carousel_event_banner">Carousel Event Banner</string>
+    <string name="favorite_event">Favorite Event</string>
+    <string name="favorite_button_desc">go to favorite page</string>
+    <string name="theme_setting_title">Dark Mode</string>
+    <string name="theme_settting_desc">Enable dark mode</string>
+    <string name="notifications_title">Notifications</string>
+    <string name="notifications_desc">Get notified about upcoming events</string>
+    <string name="notifications_permission_granted">Notifications permission granted</string>
+    <string name="notifications_permission_rejected">Notifications permission rejected</string>
+    <string name="set_event_to_favorite">set event to favorite</string>
 </resources>
